@@ -1,0 +1,20 @@
+{
+  "name": "electron-frontend",
+  "productName": "Electron Frontend",
+  "version": "1.0.0",
+  "description": "Hello World electron application",
+  "main": "main.js",
+  "devDependencies": {
+    "electron": "^7.2.4",
+    "electron-packager": "^14.0.6"
+  },
+  "scripts": {
+    "dev": "electron .",
+    "package": "electron-packager . — overwrite"
+  },
+  "dependencies": {
+    "electron": "^7.2.4",
+    "kill-port": "^1.6.0",
+    "tree-kill": "^1.2.2"
+  }
+}
