@@ -1,7 +1,7 @@
 const BASE_URL = 'http://localhost:9229';
 
-function loadOrderData() {
-  fetch(`${BASE_URL}/orders`, {
+async function loadOrderData() {
+  await fetch(`${BASE_URL}/orders`, {
     method: 'GET',
   })
   .then(response => {
@@ -38,16 +38,16 @@ function createStyledDeleteButton(orderIdToDelete) {
   deleteButton.style.padding = "5px 10px";
   deleteButton.style.cursor = "pointer";
   deleteButton.innerHTML = 'X';
-  deleteButton.addEventListener("click", () => {
-    deleteOrder(orderIdToDelete);
-    loadOrderData();
+  deleteButton.addEventListener("click", async() => {
+    await deleteOrder(orderIdToDelete);
+    await loadOrderData();
   });
 
   return deleteButton
 }
 
-function deleteOrder(orderId) {
-  fetch(`${BASE_URL}/orders/order/${orderId}`, {
+async function deleteOrder(orderId) {
+  await fetch(`${BASE_URL}/orders/order/${orderId}`, {
     method: 'DELETE',
   })
   .then(response => {
@@ -57,20 +57,21 @@ function deleteOrder(orderId) {
   })
 }
 
-function createExampleOrder() {
+async function createExampleOrder() {
   const order = {
     itemName: 'Random Item ' + (Math.floor(Math.random() * 10) + 1),
     pricePerUnit: (Math.floor(Math.random() * 10) + 1),
     amount: (Math.floor(Math.random() * 10) + 1),
     customerName: 'Max Mustermann',
   }
-  createOrder(order);
-  loadOrderData();
+
+  await createOrder(order);
+  await loadOrderData();
 }
 
 
-function createOrder(order) {
-  fetch(`${BASE_URL}/orders/order`, {
+async function createOrder(order) {
+  await fetch(`${BASE_URL}/orders/order`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -78,8 +79,8 @@ function createOrder(order) {
     body: JSON.stringify(order),
   })
   .then(response => {
-    if (!response.status !== 201) {
-      throw new Error('Network response was not ok');
+    if (response.status !== 201) {
+      throw new Error('Network response was not 201 (CREATED)');
     }
   })
 }
