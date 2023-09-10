@@ -10,7 +10,7 @@
   },
   "scripts": {
     "dev": "electron .",
-    "package": "electron-packager . — overwrite"
+    "package": "electron-packager . HelloWorld --overwrite"
   },
   "dependencies": {
     "electron": "^7.2.4",
