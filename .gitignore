@@ -40,3 +40,4 @@ build/
 /node_modules
 *.db
 *.jar
+/*win32-x64
