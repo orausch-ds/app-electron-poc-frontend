@@ -4,5 +4,5 @@ This contains the Electron Frontapp where you can create and delete orders on a 
 
 Steps:
  - Run "npm ci"
- - Build the artifact from https://github.com/orausch-ds/app-electron-poc-backend and put it under /backend
- - Run "npm run package" to create the Electron Desktop App with Backend
+ - Put the generated "custom-jre" and .jar under /backend (mentioned in https://github.com/orausch-ds/app-electron-poc-backend)
+ - Run "npm run package" to create the Electron Desktop App with the Backend
