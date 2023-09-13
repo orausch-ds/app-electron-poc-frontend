@@ -30,17 +30,9 @@ app.on('ready', function () {
 
   mainWindow.loadURL(`file://${__dirname}/app/html/loading.html`)
 
-  // Enable keyboard shortcuts for Developer Tools on various platforms.
-  let platform = os.platform()
-  if (platform === 'darwin') {
-    globalShortcut.register('Command+Option+I', () => {
-      mainWindow.webContents.openDevTools()
-    })
-  } else if (platform === 'linux' || platform === 'win32') {
-    globalShortcut.register('Control+Shift+I', () => {
-      mainWindow.webContents.openDevTools()
-    })
-  }
+  globalShortcut.register('Control+Shift+I', () => {
+    mainWindow.webContents.openDevTools()
+  })
 
   mainWindow.once('ready-to-show', () => {
     mainWindow.setMenu(null)
@@ -61,28 +53,10 @@ app.on('ready', function () {
 
 app.on('window-all-closed', () => { app.quit() })
 
-
 function spawnChildProcess() {
+  const pathToJre = path.join(__dirname, 'backend', 'custom-jre', 'bin', 'java.exe');
+  const pathToJar = path.join(__dirname, 'backend', 'spring-boot-backend.jar');
   return require('child_process').spawn(
-    path.join(__dirname, 'backend', 'custom-jre', 'bin', 'java.exe'), ['-jar', getPathToBackendJar(), '']
+    pathToJre, ['-jar', pathToJar]
   );
-}
-
-function getPathToBackendJar() {
-  const jarPattern = /^electron-poc-backend-jar-.*\.jar$/;
-  const jarFiles = [];
-  const backendPath = path.join(__dirname, 'backend');
-
-  const files = fs.readdirSync(backendPath);
-  for (const file of files) {
-    if (file.match(jarPattern)) {
-      jarFiles.push(file);
-    }
-  }
-
-  if (jarFiles.length === 0) {
-    throw new Error('No matching JAR files found.');
-  } else {
-    return path.join(backendPath, jarFiles[0]);  
-  }
 }
