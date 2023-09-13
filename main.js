@@ -16,7 +16,7 @@ process.env.APP_DIR = path.join(__dirname, 'app')
 app.name = config.productName
 var mainWindow = null
 app.on('ready', function () {
-  mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({  
     backgroundColor: 'lightgray',
     title: config.productName,
     show: false,
@@ -64,7 +64,7 @@ app.on('window-all-closed', () => { app.quit() })
 
 function spawnChildProcess() {
   return require('child_process').spawn(
-    'java', ['-jar', getPathToBackendJar(), '']
+    path.join(__dirname, 'backend', 'custom-jre', 'bin', 'java.exe'), ['-jar', getPathToBackendJar(), '']
   );
 }
 
