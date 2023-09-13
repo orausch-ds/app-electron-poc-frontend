@@ -1,7 +1,5 @@
-const BASE_URL = 'http://localhost:9229';
-
 async function loadOrderData() {
-  await fetch(`${BASE_URL}/orders`, {
+  await fetch(`${process.env.BASE_URL}/orders`, {
     method: 'GET',
   })
   .then(response => {
@@ -47,7 +45,7 @@ function createStyledDeleteButton(orderIdToDelete) {
 }
 
 async function deleteOrder(orderId) {
-  await fetch(`${BASE_URL}/orders/order/${orderId}`, {
+  await fetch(`${process.env.BASE_URL}/orders/order/${orderId}`, {
     method: 'DELETE',
   })
   .then(response => {
@@ -71,7 +69,7 @@ async function createExampleOrder() {
 
 
 async function createOrder(order) {
-  await fetch(`${BASE_URL}/orders/order`, {
+  await fetch(`${process.env.BASE_URL}/orders/order`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

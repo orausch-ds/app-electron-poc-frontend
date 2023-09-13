@@ -10,6 +10,9 @@ const config = require(path.join(__dirname, 'package.json'))
 const BrowserWindow = electron.BrowserWindow
 var kill  = require('tree-kill');
 
+process.env.BASE_URL = 'http://localhost:9229';
+process.env.APP_DIR = path.join(__dirname, 'app')
+
 app.name = config.productName
 var mainWindow = null
 app.on('ready', function () {
@@ -23,34 +26,9 @@ app.on('ready', function () {
     }
   })
 
-  var child = require('child_process').spawn(
-    'java', ['-jar', getPathToJar(), '']
-  );
+  var child = spawnChildProcess();
 
-  function getPathToJar() {
-    const jarPattern = /^electron-poc-backend-jar-.*\.jar$/;
-    const jarFiles = [];
-    var jarPath;
-    const backendPath = path.join(__dirname, 'backend');
-
-    const files = fs.readdirSync(backendPath);
-    for (const file of files) {
-      if (file.match(jarPattern)) {
-        jarFiles.push(file);
-      }
-    }
-  
-    if (jarFiles.length === 0) {
-      throw new Error('No matching JAR files found.');
-    } else {
-      // Loads 1 matching jar 
-      return path.join(backendPath, jarFiles[0]);  
-    }
-  }
-
-  setTimeout(function() {
-    mainWindow.loadURL(`file://${__dirname}/app/html/order.html`)
-  }, 10000);
+  mainWindow.loadURL(`file://${__dirname}/app/html/loading.html`)
 
   // Enable keyboard shortcuts for Developer Tools on various platforms.
   let platform = os.platform()
@@ -75,13 +53,36 @@ app.on('ready', function () {
     e.returnValue = false
   }
 
-  console.error(child.pid)
-
   mainWindow.on('closed', function () {
-    console.error('Kill the child')
     kill(child.pid);
     mainWindow = null
   })
 })
 
 app.on('window-all-closed', () => { app.quit() })
+
+
+function spawnChildProcess() {
+  return require('child_process').spawn(
+    'java', ['-jar', getPathToBackendJar(), '']
+  );
+}
+
+function getPathToBackendJar() {
+  const jarPattern = /^electron-poc-backend-jar-.*\.jar$/;
+  const jarFiles = [];
+  const backendPath = path.join(__dirname, 'backend');
+
+  const files = fs.readdirSync(backendPath);
+  for (const file of files) {
+    if (file.match(jarPattern)) {
+      jarFiles.push(file);
+    }
+  }
+
+  if (jarFiles.length === 0) {
+    throw new Error('No matching JAR files found.');
+  } else {
+    return path.join(backendPath, jarFiles[0]);  
+  }
+}

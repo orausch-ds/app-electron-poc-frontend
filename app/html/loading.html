@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <meta name='description' content=''>
+    <meta name='author' content=''>
+    <title>Electron Hello World</title>
+</head>
+
+<body onload="waitForBackendToBeReady()">
+    <div class="loading-container">
+        <div class="loading-circle"></div>
+        <h3>Haben Sie einen Moment Geduld</h3>
+    </div>
+    <script src='../js/loading.js'></script>
+</body>
+
+<style>
+    .loading-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 95vh;
+        flex-direction: column;
+    }
+
+    .loading-circle {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #3498db;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 2s linear infinite;
+        margin: 50px auto;
+    }
+
+    h3 {
+      font-family: "Helvetica Neue", sans-serif;
+      font-size: 28px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    /* Keyframes for the spin animation */
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
+
+
+</html>
