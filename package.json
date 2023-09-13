@@ -10,7 +10,8 @@
   },
   "scripts": {
     "dev": "electron .",
-    "package": "electron-packager . HelloWorld --overwrite --out ./target"
+    "package": "electron-packager . HelloWorld --overwrite --out ./target",
+    "package-all": "electron-packager . HelloWorld --overwrite --all --out ./target"
   },
   "dependencies": {
     "electron": "^7.2.4",
